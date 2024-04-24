@@ -1,0 +1,203 @@
+//jQuery(document).ready(function($) {
+//	alert("js is working")};
+//alert("JS test :p");
+
+console.log("test i konsollen :)");
+
+//create billett-array
+let billetter= [];
+
+
+//input-validation --------------------
+
+function checkAntall() { //Tall-validation
+	let tallcheck = document.getElementById("antall").value;
+	let tall = Number(tallcheck);
+	if (isNaN(tall)) {
+		document.getElementById("antallMessage").innerHTML = "Må være et tall høyere enn null";
+	} else {
+		let antall1 = document.getElementById("antall").value;
+		console.log("Valgt antall billetter er: "+antall1);
+		document.getElementById("antallMessage").innerHTML = "";
+	}
+}
+
+function getFilm(){ //getFilm writes chosen film to console
+	let film1 = document.getElementById("film").value;
+	console.log("Filmen oppgitt er: "+film1);
+}
+
+function checkFornavn() { //checkFornavn writes fornavn to console
+	let fornavn1 = document.getElementById("fornavn").value;
+	console.log("Fornavn oppgitt er : " + fornavn1);
+}
+
+function checkEtternavn() { //checkEtternavn writes etternavn to console
+	let etterNavn1 = document.getElementById("etternavn").value;
+	console.log("Etternavn oppgitt er : " + etterNavn1);
+}
+
+function checkTelefonnr() { //checkTelefonnr writes telefonnr to console
+	let telefonnr1 = document.getElementById("telefonnr").value;
+	let tall = Number(telefonnr1);
+	if (isNaN(tall)) {
+		document.getElementById("telefonnrMessage").innerHTML = "Må være et telefonnr";
+	} else {
+		console.log("Telefonnr oppgitt er : " + telefonnr1);
+	}
+}
+
+function checkEpost() { //checkEpost writes Epost to console
+	let epost1 = document.getElementById("epost").value;
+	console.log("Epost oppgitt er : " + epost1);
+}
+
+// validation end --------------------
+
+
+function kjopBillett() { //kjopBillett checks if form is filled out, inputvalidates,
+	// and registers billet as a new object before adding it to billetter[].
+	// It then runs sendBillett, and resets input fields
+
+	// checks for empty fields and adds 1 to checkCounter
+	let film1 = document.getElementById("film").value;
+	let checkCount = 0;
+	if (film1 === "Film") {
+		document.getElementById("filmMessage").innerHTML = "Velg en Film";
+	} else {
+		document.getElementById("filmMessage").innerHTML = "";
+		checkCount++;
+	}
+	let antall1 = document.getElementById("antall").value;
+	if (antall1 <= 0) {
+		document.getElementById("antallMessage").innerHTML = "Må skrive noe inn i anntall";
+	} else{
+		document.getElementById("antallMessage").innerHTML = "";
+		checkCount++;
+	}
+	let fornavn1 = document.getElementById("fornavn").value;
+	if (fornavn1 === "") {
+		document.getElementById("fornavnMessage").innerHTML = "Må skrive noe inn i Fornavn";
+	} else{
+		document.getElementById("fornavnMessage").innerHTML = "";
+		checkCount++;
+	}
+	let etterNavn1 = document.getElementById("etternavn").value;
+	if (etterNavn1 === "") {
+		document.getElementById("etternavnMessage").innerHTML = "Må skrive noe inn i Etternavn";
+	} else {
+		document.getElementById("etternavnMessage").innerHTML = "";
+		checkCount++;
+	}
+	let telefonnr1 = document.getElementById("telefonnr").value;
+	if (telefonnr1.length !== 8) {
+		document.getElementById("telefonnrMessage").innerHTML = "Må skrive noe inn i Telefonnr";
+	} else {
+		document.getElementById("telefonnrMessage").innerHTML = "";
+		checkCount++;
+	}
+	let epost1 = document.getElementById("epost").value;
+	if (epost1.length < 3) {
+		document.getElementById("epostMessage").innerHTML = "Må skrive noe inn i Epost";
+	} else {
+		document.getElementById("epostMessage").innerHTML = "";
+		checkCount++;
+	}
+
+	//creates an object with the inputs, adds it to an array, and resets input fields
+	let billett;
+
+	if (checkCount != 6) {
+	// 	give user info here?
+	} else {
+		billett = {
+			film: film1,
+			antall: antall1,
+			fornavn: fornavn1,
+			etternavn: etterNavn1,
+			telefonnr: telefonnr1,
+			epost: epost1
+
+		};
+		// checkCount = 0;
+
+		billetter.push(billett);
+
+		if (billetter.length > 0){
+			console.log("billett registered in billetter");
+		}
+
+		sendBillett();
+		console.log("billett sent from js");
+
+		// Resets input fields
+		document.getElementById("film").value = "Film";
+		document.getElementById("antall").value = "";
+		document.getElementById("fornavn").value = "";
+		document.getElementById("etternavn").value = "";
+		document.getElementById("telefonnr").value = "";
+		document.getElementById("epost").value = "";
+	}
+
+	visBilletter();
+}
+
+
+//vi Billetter function
+function visBilletter() {
+	let billettlisteContent = "";
+	for(let i in billetter) {
+		billettlisteContent += billetter[i].film+", "+billetter[i].antall+", "+
+			billetter[i].fornavn+", "+billetter[i].etternavn+", "+billetter[i].telefonnr
+			+", "+billetter[i].epost+"<br>";
+	}
+	document.getElementById("billettliste").innerHTML = billettlisteContent;
+}
+
+//function to delete values of billetter[]
+function slettBilletter(){
+	billetter = [];
+	// let billettlisteContent="";
+	document.getElementById("billettliste").innerHTML = "";
+	console.log("Billetter slettet");
+}
+
+function testbilletter() { //tester get-mapping
+	$.get("/kinobilletter", function(data){
+		console.log(data);
+		let dynamicHtml= "<ul>";
+		data.forEach(function(bill){
+			// dynamically create html arround the list of object
+			dynamicHtml += "<li>" +bill.film + " " +bill.antall + " "+bill.fornavn +
+				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost + "</li>";
+		})
+		dynamicHtml+="</ul>"
+		document.getElementById("billettest").innerHTML = dynamicHtml;
+	})
+}
+
+function sendBillett(){ //registers input as object billett, and posts it to /submitdata
+	let billett = {
+		"film": document.getElementById("film").value,
+		"antall": document.getElementById("antall").value,
+		"fornavn": document.getElementById("fornavn").value,
+		"etternavn": document.getElementById("etternavn").value,
+		"telefonnr": document.getElementById("telefonnr").value,
+		"epost": document.getElementById("epost").value
+	}
+	console.log(billett);
+	// $.post("/submitdata",billett, function (data){})
+	// denne koden er hentet fra chatgpt - Todo: sjekk ut pensum!!
+	$.ajax({
+		url: "http://localhost:8080/submitdata",
+		type: "POST",
+		contentType: "application/json",
+		data: JSON.stringify(billett),
+		success: function(data) {
+			console.log("Data submitted successfully:", data);
+		},
+		error: function(xhr, status, error) {
+			console.error("Error:", error);
+		}
+	});
+}

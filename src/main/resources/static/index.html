@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html lang="no">
+    <head>
+      <meta charset="UTF-8">
+      <title>Kinobilletter</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <script src="kinoappp.js" defer="defer"></script>
+    </head>
+
+    <!--TODO:
+    implementere database.
+    security stuff??
+
+    -->
+
+    <body>
+
+        <h1>Bestilling av kinobilleter</h1>
+
+        <div class ="form">
+          <div id ="chooseFilm">
+            Velg film:
+            <select id="film" name="Film" onchange="getFilm();">
+              <option disabled selected>Film</option>
+              <option value = "Deep Blue Sea">Deep Blue Sea</option>
+              <option value = "Meg 2">Meg 2</option>
+              <option value = "Titanic 2">Titanic 2</option>
+            </select>
+            <div id = filmMessage></div>
+          </div>
+          <br>
+          <div id ="chooseAntall">
+            Antall
+            <input type="text" id = "antall" size="2" maxlength ="2" onchange="checkAntall();">
+            <div id="antallMessage"></div>
+          </div>
+          <br>
+          <div id="chooseFornavn">
+            Fornavn &nbsp;
+            <input type="text" id = "fornavn" onchange="checkFornavn()">
+            <div id="fornavnMessage"></div>
+          </div>
+          <div id ="chooseEtternavn">
+            Etternavn
+            <input type="text" id = "etternavn" onchange="checkEtternavn()">
+            <div id="etternavnMessage"></div>
+          </div>
+          <div id ="choseNumber">
+            Telefonnr
+            <input type="text" id = "telefonnr" onchange="checkTelefonnr()">
+            <div id="telefonnrMessage"></div>
+          </div>
+          <div id ="choseEpost">
+            Epost&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" id = "epost" onchange="checkEpost()">
+            <div id="epostMessage"></div>
+          </div>
+          <br>
+          <button onclick="kjopBillett()">Kjøp billett</button>
+          <br>
+        </div>
+
+        <div id ="allebilletter">
+            <h2>Alle Billetter</h2>
+            <button onclick="visBilletter()">vis alle billetter</button>
+            <div id = billettliste></div>
+            <br>
+            <button onclick="slettBilletter()">Slett alle billetter</button>
+
+        </div>
+
+        <div id ="billettertest">
+            <h2>Billettertest</h2>
+            <button onclick="testbilletter()">vis alle billetter</button>
+            <div id = billettest></div>
+            <br>
+        </div>
+
+    </body>
+</html>
