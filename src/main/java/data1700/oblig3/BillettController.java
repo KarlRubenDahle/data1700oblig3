@@ -1,5 +1,6 @@
 package data1700.oblig3;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @RestController
 public class BillettController {
+
+    @Autowired
+    BillettRepository billettRepository;
     @GetMapping("/heiverden")
     public String heiVerden (String navn){
         return "Hei Verden, "+navn;
@@ -51,11 +55,11 @@ public class BillettController {
 
     }
 
-    //postman fra jdbcExampleApplication
-//    @PostMapping("/insertStudentInDB")
-//    public void insertStudentInDb(Billett billett){
-//        billettRepository.insertStudent(billett);
-//    }
+//TODO: Fix denne:
+    @PostMapping("/insertBillettInDB")
+    public void insertStudentInDb(Billett billett){
+        billettRepository.insertBillett(billett);
+    }
 
 
 

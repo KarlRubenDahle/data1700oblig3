@@ -9,6 +9,10 @@ public class Billett {
     private Integer telefonnr;
     private String epost;
 
+
+
+    private Long id;
+
     public Billett(){}
 
     public Billett(String film, Integer antall, String fornavn, String etternavn, Integer telefonnr, String epost){
@@ -68,6 +72,10 @@ public class Billett {
     public void setEpost(String epost) {
         this.epost = epost;
     }
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     @Override
     public String toString() {
