@@ -145,8 +145,8 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 }
 
 
-//vi Billetter function
-function visBilletter() {
+
+function visBilletter() { //displays registered billetter from js billetter
 	let billettlisteContent = "";
 	for(let i in billetter) {
 		billettlisteContent += billetter[i].film+", "+billetter[i].antall+", "+
@@ -156,6 +156,8 @@ function visBilletter() {
 	document.getElementById("billettliste").innerHTML = billettlisteContent;
 }
 
+
+
 //function to delete values of billetter[]
 function slettBilletter(){
 	billetter = [];
@@ -164,33 +166,50 @@ function slettBilletter(){
 	console.log("Billetter slettet");
 }
 
-function testbilletter() { //tests get-mapping
-	$.get("/kinobilletter", function(data){
+// function testbilletter() { //tests get-mapping
+// 	$.get("/kinobilletter", function(data){
+// 		console.log(data);
+// 		let dynamicHtml= "<ul>";
+// 		data.forEach(function(bill){
+// 			// dynamically create html arround the list of object
+// 			dynamicHtml += "<li>" +bill.film + " " +bill.antall + " "+bill.fornavn +
+// 				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost + "</li>";
+// 		})
+// 		dynamicHtml+="</ul>"
+// 		document.getElementById("billettest").innerHTML = dynamicHtml;
+// 	})
+// }
+
+function visBilletterFromDB(){ //recieves list of billett from DB and displays them as a <li>
+	$.get("/getBilletterFromDB", function(data) { //recieves list of billett from DB
 		console.log(data);
 		let dynamicHtml= "<ul>";
 		data.forEach(function(bill){
-			// dynamically create html arround the list of object
+			// dynamically creates html arround the list of objects
 			dynamicHtml += "<li>" +bill.film + " " +bill.antall + " "+bill.fornavn +
 				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost + "</li>";
 		})
 		dynamicHtml+="</ul>"
 		document.getElementById("billettest").innerHTML = dynamicHtml;
+
 	})
-}
-
-function sendBillettToJava(){ //registers input as object billett, and posts it to /submitdata
-	let billett = {
-		"film": document.getElementById("film").value,
-		"antall": document.getElementById("antall").value,
-		"fornavn": document.getElementById("fornavn").value,
-		"etternavn": document.getElementById("etternavn").value,
-		"telefonnr": document.getElementById("telefonnr").value,
-		"epost": document.getElementById("epost").value
-	}
-	console.log(billett);
-	$.post("/submitdata",billett, function (data){})
 
 }
+
+
+// function sendBillettToJava(){ //registers input as object billett, and posts it to /submitdata
+// 	let billett = {
+// 		"film": document.getElementById("film").value,
+// 		"antall": document.getElementById("antall").value,
+// 		"fornavn": document.getElementById("fornavn").value,
+// 		"etternavn": document.getElementById("etternavn").value,
+// 		"telefonnr": document.getElementById("telefonnr").value,
+// 		"epost": document.getElementById("epost").value
+// 	}
+// 	console.log(billett);
+// 	$.post("/submitdata",billett, function (data){})
+//
+// }
 
 function sendBillettToDB() { //registers input as object billett, and sends to DB
 	let billett = {

@@ -33,6 +33,8 @@ public class BillettRepository {
 
     public Billett findById(long id) {
         return jdbcTemplate.queryForObject("select * from billett where id=?", new BillettRowMapper(), id);
+//        return jdbcTemplate.queryForObject("select * from billett", new BillettRowMapper(), id);
+
     }
 
     public List<Billett> findAll(){
@@ -41,7 +43,7 @@ public class BillettRepository {
 
     public int insertBillettInDB(Billett billett) {  // Inserts billett into database
         String sql = "INSERT INTO billett (film, antall, fornavn, etternavn, telefonnr, epost) VALUES (?, ?, ?, ?, ?, ?)";
-        System.out.println(billett + "data sent to database");
+        System.out.println(billett + "sent to database");
         return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getFornavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost());
     }
 
