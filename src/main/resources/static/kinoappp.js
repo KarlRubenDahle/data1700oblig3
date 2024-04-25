@@ -89,6 +89,7 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 		document.getElementById("etternavnMessage").innerHTML = "";
 		checkCount++;
 	}
+	//Todo fix typecheck here, input as int, put forward as String
 	let telefonnr1 = document.getElementById("telefonnr").value;
 	if (telefonnr1.length !== 8) {
 		document.getElementById("telefonnrMessage").innerHTML = "Må skrive noe inn i Telefonnr";
@@ -104,7 +105,7 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 		checkCount++;
 	}
 
-	//creates an object with the inputs, adds it to an array, and resets input fields
+	//creates an object with the inputs, adds it to an array, sends to DB, and resets input fields
 	let billett;
 
 	if (checkCount != 6) {
@@ -125,10 +126,11 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 
 		if (billetter.length > 0){
 			console.log("billett registered in billetter");
+			sendBillettToDB();
 		}
 
-		sendBillett();
-		console.log("billett sent from js");
+		// sendBillettToJava();
+
 
 		// Resets input fields
 		document.getElementById("film").value = "Film";
@@ -162,7 +164,7 @@ function slettBilletter(){
 	console.log("Billetter slettet");
 }
 
-function testbilletter() { //tester get-mapping
+function testbilletter() { //tests get-mapping
 	$.get("/kinobilletter", function(data){
 		console.log(data);
 		let dynamicHtml= "<ul>";
@@ -176,7 +178,7 @@ function testbilletter() { //tester get-mapping
 	})
 }
 
-function sendBillett(){ //registers input as object billett, and posts it to /submitdata
+function sendBillettToJava(){ //registers input as object billett, and posts it to /submitdata
 	let billett = {
 		"film": document.getElementById("film").value,
 		"antall": document.getElementById("antall").value,
@@ -186,18 +188,19 @@ function sendBillett(){ //registers input as object billett, and posts it to /su
 		"epost": document.getElementById("epost").value
 	}
 	console.log(billett);
-	// $.post("/submitdata",billett, function (data){})
-	// denne koden er hentet fra chatgpt - Todo: sjekk ut pensum!!
-	$.ajax({
-		url: "http://localhost:8080/submitdata",
-		type: "POST",
-		contentType: "application/json",
-		data: JSON.stringify(billett),
-		success: function(data) {
-			console.log("Data submitted successfully:", data);
-		},
-		error: function(xhr, status, error) {
-			console.error("Error:", error);
-		}
-	});
+	$.post("/submitdata",billett, function (data){})
+
+}
+
+function sendBillettToDB() { //registers input as object billett, and sends to DB
+	let billett = {
+		"film": document.getElementById("film").value,
+		"antall": document.getElementById("antall").value,
+		"fornavn": document.getElementById("fornavn").value,
+		"etternavn": document.getElementById("etternavn").value,
+		"telefonnr": document.getElementById("telefonnr").value,
+		"epost": document.getElementById("epost").value
+	}
+	console.log(billett);
+	$.post("/insertBillettInDB", billett, function (data){})
 }

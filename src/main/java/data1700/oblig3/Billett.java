@@ -6,7 +6,7 @@ public class Billett {
     private Integer antall;
     private String fornavn;
     private String etternavn;
-    private Integer telefonnr;
+    private String telefonnr;
     private String epost;
 
 
@@ -15,7 +15,7 @@ public class Billett {
 
     public Billett(){}
 
-    public Billett(String film, Integer antall, String fornavn, String etternavn, Integer telefonnr, String epost){
+    public Billett(String film, Integer antall, String fornavn, String etternavn, String telefonnr, String epost){
         this.film = film;
         this.antall = antall;
         this.fornavn = fornavn;
@@ -57,11 +57,11 @@ public class Billett {
         this.etternavn = etternavn;
     }
 
-    public Integer getTelefonnr() {
+    public String getTelefonnr() {
         return telefonnr;
     }
 
-    public void setTelefonnr(Integer telefonnr) {
+    public void setTelefonnr(String telefonnr) {
         this.telefonnr = telefonnr;
     }
 

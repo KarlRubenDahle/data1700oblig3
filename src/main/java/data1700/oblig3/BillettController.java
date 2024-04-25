@@ -14,24 +14,24 @@ public class BillettController {
 
     @Autowired
     BillettRepository billettRepository;
-    @GetMapping("/heiverden")
+    @GetMapping("/heiverden") // hello world test
     public String heiVerden (String navn){
         return "Hei Verden, "+navn;
     }
 
-    @GetMapping("/kinobillett")
+    @GetMapping("/kinobillett") //returns premade billett
     public Billett showBillett(){
         Billett billett1 = new Billett("Titanic 2", 2, "Andre", "Hestvoll",
-                23456789, "kr.kr@kr.kr");
+                "23456789", "kr.kr@kr.kr");
         return billett1;
     }
 
-    @GetMapping("/kinobilletter")
+    @GetMapping("/kinobilletter") // returns list with two premade billett
     public List<Billett> showBilletter(){
         Billett Billett1 = new Billett("Deep Blue Ocean", 5, "Even", "Harr",
-                12345678, "no@no.no");
+                "12345678", "no@no.no");
         Billett Billett2 = new Billett("Titanic 2", 7, "Thorvald", "Tønnesen",
-                11223344, "se@se.se");
+                "11223344", "se@se.se");
         List<Billett> billettList = new ArrayList<>();
         billettList.add(Billett1);
         billettList.add(Billett2);
@@ -40,13 +40,13 @@ public class BillettController {
     }
 
 
-    @PostMapping("/senddudes")
+    @PostMapping("/senddudes") //test for postmapping
     public void motattInfo(@RequestBody Billett billett){
         System.out.println("Jeg fikk akkurat dudes. Her er de: ");
         System.out.println(billett.toString());
     }
 
-    @PostMapping("/submitdata")
+    @PostMapping("/submitdata") // sends data to java anf prints it
     public String submitData(@RequestBody Billett billett) {
         // Handle the submitted data
         System.out.println("mottatt: " + billett.toString());
@@ -55,10 +55,10 @@ public class BillettController {
 
     }
 
-//TODO: Fix denne:
     @PostMapping("/insertBillettInDB")
-    public void insertStudentInDb(Billett billett){
-        billettRepository.insertBillett(billett);
+    public void insertBillettInDb(Billett billett){
+        billettRepository.insertBillettInDB(billett);
+        System.out.println("mottatt: " + billett);
     }
 
 

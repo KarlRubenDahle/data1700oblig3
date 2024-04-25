@@ -25,7 +25,7 @@ public class BillettRepository {
             billett.setAntall(rs.getInt("antall"));
             billett.setFornavn(rs.getString("fornavn"));
             billett.setEtternavn(rs.getString("etternavn"));
-            billett.setTelefonnr(rs.getInt("telefonnr"));
+            billett.setTelefonnr(rs.getString("telefonnr"));
             billett.setEpost(rs.getString("epost"));
             return billett;
         }
@@ -39,14 +39,15 @@ public class BillettRepository {
         return jdbcTemplate.query("SELECT * FROM billett", new BillettRowMapper());
     }
 
-    public int insertBillett(Billett billett) {  // Inserts billett into database
+    public int insertBillettInDB(Billett billett) {  // Inserts billett into database
         String sql = "INSERT INTO billett (film, antall, fornavn, etternavn, telefonnr, epost) VALUES (?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getEtternavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost());
+        System.out.println(billett + "data sent to database");
+        return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getFornavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost());
     }
 
     public int updateBillett(Billett billett) { //updates billet information
         String sql = "UPDATE billett SET film = ?, antall =?, fornavn =?, etternavn =?, telefonnr =?, epost =? where id= ?";
-        return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getEtternavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost(), billett.getId());
+        return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getFornavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost(), billett.getId());
     }
 
     public int deleteBillett(Long id){
