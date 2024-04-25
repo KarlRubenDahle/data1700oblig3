@@ -170,7 +170,7 @@ function visBilletterFromDB(){ //recieves list of billett from DB and displays t
 		data.forEach(function(bill){
 			// dynamically creates html arround the list of objects
 			dynamicHtml += "<li>" +bill.film + ", " +bill.antall + ", " + bill.etternavn + ", " + bill.fornavn +
-				", " + bill.telefonnr + ", " + bill.epost +
+				", " + bill.telefonnr + ", " + bill.epost + " " +
 				"<button onclick='deleteBillett(" + bill.id + ")'>Delete</button>" + " " + "</li>";
 		})
 		dynamicHtml+="</ul>"

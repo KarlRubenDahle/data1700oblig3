@@ -18,27 +18,6 @@ public class BillettController {
         return "Hei Verden, "+navn;
     }
 
-    @GetMapping("/kinobillett") //returns premade billett
-    public Billett showBillett(){
-        Billett billett1 = new Billett("Titanic 2", 2, "Andre", "Hestvoll",
-                "23456789", "kr.kr@kr.kr");
-        return billett1;
-    }
-
-//    @GetMapping("/kinobilletter") // returns list with two premade billett
-//    public List<Billett> showBilletter(){
-//        Billett Billett1 = new Billett("Deep Blue Ocean", 5, "Even", "Harr",
-//                "12345678", "no@no.no");
-//        Billett Billett2 = new Billett("Titanic 2", 7, "Thorvald", "Tønnesen",
-//                "11223344", "se@se.se");
-//        List<Billett> billettList = new ArrayList<>();
-//        billettList.add(Billett1);
-//        billettList.add(Billett2);
-//
-//        return billettList;
-//    }
-
-
 
     @PostMapping("/submitdata") // sends data to java anf prints it
     public String submitData(@RequestBody Billett billett) {
@@ -46,7 +25,6 @@ public class BillettController {
         System.out.println("mottatt: " + billett.toString());
 //      Billett billett1 = new Billett();
         return "Data submitted successfully: " + billett;
-
     }
 
 
@@ -64,7 +42,7 @@ public class BillettController {
     @DeleteMapping("/deleteBillett")
     public String deleteBillett(@RequestParam Long id){
         billettRepository.deleteBillett(id);
-        System.out.println("Billett deletet");
+        System.out.println("Billett deleted");
         return "deleted";
     }
 

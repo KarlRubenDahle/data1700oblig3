@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS `billett` (
     `epost` VARCHAR(50) NOT NULL
     );
 INSERT INTO billett (film, antall, fornavn, etternavn, telefonnr, epost)
-VALUES ('Titanic 2', 1, 'Sack', 'Znyder', '12345678', 'hello@qatermovies.com');
+VALUES ('Titanic 2', 1, 'Sack', 'Znyder', '12345678', 'hello@watermovies.com');
