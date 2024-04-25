@@ -34,14 +34,14 @@ public class BillettRepository {
         }
     }
 
-    public Billett findById(long id) {
-        return jdbcTemplate.queryForObject("select * from billett where id=?", new BillettRowMapper(), id);
-//        return jdbcTemplate.queryForObject("select * from billett", new BillettRowMapper(), id);
-
-    }
+//    public Billett findById(long id) {
+//        return jdbcTemplate.queryForObject("select * from billett where id=?", new BillettRowMapper(), id);
+////        return jdbcTemplate.queryForObject("select * from billett", new BillettRowMapper(), id);
+//
+//    }
 
     public List<Billett> findAll(){
-        return jdbcTemplate.query("SELECT * FROM billett", new BillettRowMapper());
+        return jdbcTemplate.query("SELECT * FROM billett ORDER BY etternavn", new BillettRowMapper());
     }
 
     public int insertBillettInDB(Billett billett) {  // Inserts billett into database
@@ -50,10 +50,10 @@ public class BillettRepository {
         return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getFornavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost());
     }
 
-    public int updateBillett(Billett billett) { //updates billet information
-        String sql = "UPDATE billett SET film = ?, antall =?, fornavn =?, etternavn =?, telefonnr =?, epost =? where id= ?";
-        return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getFornavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost(), billett.getId());
-    }
+//    public int updateBillett(Billett billett) { //updates billet information
+//        String sql = "UPDATE billett SET film = ?, antall =?, fornavn =?, etternavn =?, telefonnr =?, epost =? where id= ?";
+//        return jdbcTemplate.update(sql, billett.getFilm(),billett.getAntall(), billett.getFornavn(), billett.getEtternavn(), billett.getTelefonnr(), billett.getEpost(), billett.getId());
+//    }
 
     public int deleteBillett(Long id){
         String sql = "delete from billett where id = ?";

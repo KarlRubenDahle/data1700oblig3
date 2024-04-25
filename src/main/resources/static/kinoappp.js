@@ -89,7 +89,7 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 		document.getElementById("etternavnMessage").innerHTML = "";
 		checkCount++;
 	}
-	//Todo fix typecheck here, input as int, put forward as String
+
 	let telefonnr1 = document.getElementById("telefonnr").value;
 	if (telefonnr1.length !== 8) {
 		document.getElementById("telefonnrMessage").innerHTML = "Må skrive noe inn i Telefonnr";
@@ -129,7 +129,6 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 			sendBillettToDB();
 		}
 
-		// sendBillettToJava();
 		visBilletterFromDB()
 
 		// Resets input fields
@@ -140,8 +139,6 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 		document.getElementById("telefonnr").value = "";
 		document.getElementById("epost").value = "";
 	}
-
-	// visBilletter();
 
 }
 
@@ -165,19 +162,6 @@ function slettBilletter(){ //function to delete values of billetter[]
 	console.log("Billetter slettet");
 }
 
-// function testbilletter() { //tests get-mapping
-// 	$.get("/kinobilletter", function(data){
-// 		console.log(data);
-// 		let dynamicHtml= "<ul>";
-// 		data.forEach(function(bill){
-// 			// dynamically create html arround the list of object
-// 			dynamicHtml += "<li>" +bill.film + " " +bill.antall + " "+bill.fornavn +
-// 				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost + "</li>";
-// 		})
-// 		dynamicHtml+="</ul>"
-// 		document.getElementById("billettest").innerHTML = dynamicHtml;
-// 	})
-// }
 
 function visBilletterFromDB(){ //recieves list of billett from DB and displays them as a <li>
 	$.get("/getBilletterFromDB", function(data) { //recieves list of billett from DB
@@ -185,8 +169,8 @@ function visBilletterFromDB(){ //recieves list of billett from DB and displays t
 		let dynamicHtml= "<ul>";
 		data.forEach(function(bill){
 			// dynamically creates html arround the list of objects
-			dynamicHtml += "<li>" +bill.film + " " +bill.antall + " "+bill.fornavn +
-				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost +
+			dynamicHtml += "<li>" +bill.film + ", " +bill.antall + ", " + bill.etternavn + ", " + bill.fornavn +
+				", " + bill.telefonnr + ", " + bill.epost +
 				"<button onclick='deleteBillett(" + bill.id + ")'>Delete</button>" + " " + "</li>";
 		})
 		dynamicHtml+="</ul>"
@@ -196,20 +180,6 @@ function visBilletterFromDB(){ //recieves list of billett from DB and displays t
 
 }
 
-
-// function sendBillettToJava(){ //registers input as object billett, and posts it to /submitdata
-// 	let billett = {
-// 		"film": document.getElementById("film").value,
-// 		"antall": document.getElementById("antall").value,
-// 		"fornavn": document.getElementById("fornavn").value,
-// 		"etternavn": document.getElementById("etternavn").value,
-// 		"telefonnr": document.getElementById("telefonnr").value,
-// 		"epost": document.getElementById("epost").value
-// 	}
-// 	console.log(billett);
-// 	$.post("/submitdata",billett, function (data){})
-//
-// }
 
 function sendBillettToDB() { //registers input as object billett, and sends to DB
 	let billett = {
@@ -224,12 +194,11 @@ function sendBillettToDB() { //registers input as object billett, and sends to D
 	$.post("/insertBillettInDB", billett, function (data){})
 }
 
-function deleteBillett(id){
+function deleteBillett(id){ //Deletes billett from database and updates list on frontend.
 	$.ajax({
 		url: '/deleteBillett?id='+id,
 		type: 'DELETE',
 		success: function(result) {
-			// Do something with the result
 			visBilletterFromDB()
 		}
 	});
