@@ -130,7 +130,7 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 		}
 
 		// sendBillettToJava();
-
+		visBilletterFromDB()
 
 		// Resets input fields
 		document.getElementById("film").value = "Film";
@@ -141,7 +141,8 @@ function kjopBillett() { //kjopBillett checks if form is filled out, inputvalida
 		document.getElementById("epost").value = "";
 	}
 
-	visBilletter();
+	// visBilletter();
+
 }
 
 
@@ -157,9 +158,7 @@ function visBilletter() { //displays registered billetter from js billetter
 }
 
 
-
-//function to delete values of billetter[]
-function slettBilletter(){
+function slettBilletter(){ //function to delete values of billetter[]
 	billetter = [];
 	// let billettlisteContent="";
 	document.getElementById("billettliste").innerHTML = "";
@@ -187,10 +186,11 @@ function visBilletterFromDB(){ //recieves list of billett from DB and displays t
 		data.forEach(function(bill){
 			// dynamically creates html arround the list of objects
 			dynamicHtml += "<li>" +bill.film + " " +bill.antall + " "+bill.fornavn +
-				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost + "</li>";
+				" " + bill.etternavn +" " + bill.telefonnr + " " + bill.epost +
+				"<button onclick='deleteBillett(" + bill.id + ")'>Delete</button>" + " " + "</li>";
 		})
 		dynamicHtml+="</ul>"
-		document.getElementById("billettest").innerHTML = dynamicHtml;
+		document.getElementById("billetterList").innerHTML = dynamicHtml;
 
 	})
 
@@ -222,4 +222,16 @@ function sendBillettToDB() { //registers input as object billett, and sends to D
 	}
 	console.log(billett);
 	$.post("/insertBillettInDB", billett, function (data){})
+}
+
+function deleteBillett(id){
+	$.ajax({
+		url: '/deleteBillett?id='+id,
+		type: 'DELETE',
+		success: function(result) {
+			// Do something with the result
+			visBilletterFromDB()
+		}
+	});
+
 }

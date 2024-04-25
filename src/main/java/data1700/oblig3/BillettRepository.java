@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+
+//Code based on Cosmins example code
+
 @Repository
 public class BillettRepository {
 

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//Code based on Cosmins example code
+
 @RestController
 public class BillettController {
 
@@ -37,11 +39,10 @@ public class BillettController {
     }
 
 
-    @PostMapping("/senddudes") //test for postmapping
-    public void motattInfo(@RequestBody Billett billett){
-        System.out.println("Jeg fikk akkurat dudes. Her er de: ");
-        System.out.println(billett.toString());
-    }
+//    @PostMapping("/senddudes") //test for postmapping
+//    public void motattInfo(@RequestBody Billett billett){
+//        System.out.println("Jeg fikk akkurat dudes. Her er de: " + billett.toString());
+//    }
 
     @PostMapping("/submitdata") // sends data to java anf prints it
     public String submitData(@RequestBody Billett billett) {
@@ -69,6 +70,12 @@ public class BillettController {
         System.out.println("mottatt: " + billett);
     }
 
+    @DeleteMapping("/deleteBillett")
+    public String deleteBillett(@RequestParam Long id){
+        billettRepository.deleteBillett(id);
+        System.out.println("Billett deletet");
+        return "deleted";
+    }
 
 
 }
